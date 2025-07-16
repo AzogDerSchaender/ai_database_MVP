@@ -134,3 +134,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Support
 
 For support, email support@example.com or open an issue in the GitHub repository.
+
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/AzogDerSchaender/ai_database_MVP?utm_source=oss&utm_medium=github&utm_campaign=AzogDerSchaender%2Fai_database_MVP&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
+
