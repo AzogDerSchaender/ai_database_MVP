@@ -1,0 +1,10 @@
+{
+  "messages_published": 0,
+  "messages_delivered": 0,
+  "messages_failed": 0,
+  "messages_dlq": 0,
+  "delivery_errors": 0,
+  "queue_overflows": 0,
+  "avg_latency_ms": 0.0,
+  "throughput_per_sec": 0.0
+}

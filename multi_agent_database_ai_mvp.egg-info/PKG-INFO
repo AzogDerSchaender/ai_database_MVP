@@ -1,0 +1,218 @@
+Metadata-Version: 2.4
+Name: multi-agent-database-ai-mvp
+Version: 0.1.0
+Summary: A multi-agent database AI system for intelligent query generation and execution
+Author-email: Your Name <your.email@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/yourusername/multi-agent-database-ai-mvp
+Project-URL: Documentation, https://multi-agent-database-ai-mvp.readthedocs.io
+Project-URL: Repository, https://github.com/yourusername/multi-agent-database-ai-mvp
+Project-URL: Issues, https://github.com/yourusername/multi-agent-database-ai-mvp/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Database
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi>=0.108.0
+Requires-Dist: sqlalchemy>=2.0.25
+Requires-Dist: uvicorn[standard]>=0.25.0
+Requires-Dist: pydantic>=2.5.0
+Requires-Dist: redis>=5.0.1
+Requires-Dist: asyncpg>=0.29.0
+Requires-Dist: psycopg2-binary>=2.9.9
+Requires-Dist: pymysql[rsa]>=1.1.0
+Requires-Dist: alembic>=1.13.1
+Requires-Dist: aiofiles>=23.2.1
+Requires-Dist: aioredis>=2.0.1
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: pyyaml>=6.0.1
+Requires-Dist: python-multipart>=0.0.6
+Requires-Dist: httpx>=0.25.2
+Requires-Dist: tenacity>=8.2.3
+Requires-Dist: loguru>=0.7.2
+Requires-Dist: prometheus-client>=0.19.0
+Requires-Dist: openai>=1.6.1
+Requires-Dist: langchain>=0.0.350
+Requires-Dist: tiktoken>=0.5.2
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.3; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.1; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: pytest-mock>=3.12.0; extra == "dev"
+Requires-Dist: pytest-xdist>=3.5.0; extra == "dev"
+Requires-Dist: hypothesis>=6.92.1; extra == "dev"
+Requires-Dist: faker>=20.1.0; extra == "dev"
+Requires-Dist: black[jupyter]>=23.12.0; extra == "dev"
+Requires-Dist: mypy>=1.8.0; extra == "dev"
+Requires-Dist: flake8>=7.0.0; extra == "dev"
+Requires-Dist: flake8-docstrings>=1.7.0; extra == "dev"
+Requires-Dist: flake8-bugbear>=23.12.2; extra == "dev"
+Requires-Dist: isort>=5.13.0; extra == "dev"
+Requires-Dist: bandit>=1.7.6; extra == "dev"
+Requires-Dist: safety>=3.0.1; extra == "dev"
+Requires-Dist: pre-commit>=3.6.0; extra == "dev"
+Requires-Dist: ipython>=8.18.1; extra == "dev"
+Requires-Dist: jupyter>=1.0.0; extra == "dev"
+Requires-Dist: rich>=13.7.0; extra == "dev"
+Requires-Dist: typer>=0.9.0; extra == "dev"
+Requires-Dist: mkdocs>=1.5.3; extra == "dev"
+Requires-Dist: mkdocs-material>=9.5.3; extra == "dev"
+Requires-Dist: mkdocstrings[python]>=0.24.0; extra == "dev"
+Requires-Dist: types-redis>=4.6.0.11; extra == "dev"
+Requires-Dist: types-aiofiles>=23.2.0.0; extra == "dev"
+Requires-Dist: types-pyyaml>=6.0.12.12; extra == "dev"
+Requires-Dist: py-spy>=0.3.14; extra == "dev"
+Requires-Dist: memory-profiler>=0.61.0; extra == "dev"
+Requires-Dist: line-profiler>=4.1.2; extra == "dev"
+Provides-Extra: postgres
+Requires-Dist: asyncpg>=0.29.0; extra == "postgres"
+Requires-Dist: psycopg2-binary>=2.9.9; extra == "postgres"
+Provides-Extra: mysql
+Requires-Dist: aiomysql>=0.2.0; extra == "mysql"
+Requires-Dist: pymysql[rsa]>=1.1.0; extra == "mysql"
+Provides-Extra: all
+Requires-Dist: multi-agent-database-ai-mvp[dev,mysql,postgres]; extra == "all"
+
+# Multi-Agent Database AI MVP
+
+A production-ready multi-agent database AI system for intelligent query generation and execution, built with FastAPI, SQLAlchemy, and modern Python best practices.
+
+## Features
+
+- **Multi-Agent Architecture**: Specialized agents for query clarification, code generation, and testing
+- **Database Agnostic**: Support for PostgreSQL, MySQL, and other SQL databases
+- **Async First**: Built on FastAPI with full async/await support
+- **Type Safe**: Comprehensive type hints and runtime validation with Pydantic
+- **Production Ready**: Monitoring, logging, and error handling built-in
+- **Extensible**: Plugin architecture for custom agents and workflows
+
+## Quick Start
+
+### Prerequisites
+
+- Python 3.10 or higher
+- PostgreSQL or MySQL (optional)
+- Redis (for caching and message bus)
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/multi-agent-database-ai-mvp.git
+cd multi-agent-database-ai-mvp
+```
+
+2. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install the package in development mode:
+```bash
+pip install -e ".[dev]"
+```
+
+4. Copy environment configuration:
+```bash
+cp .env.example .env
+```
+
+5. Run the development server:
+```bash
+uvicorn core.api.main:app --reload
+```
+
+## Project Structure
+
+```
+multi-agent-database-ai-mvp/
+├── core/               # Core application code
+│   ├── agents/        # Agent implementations
+│   ├── database/      # Database connectors and models
+│   └── api/          # FastAPI routes and endpoints
+├── frontend/          # Web UI (if applicable)
+├── sdk/              # Python SDK for external integration
+├── config/           # Configuration files
+├── tests/            # Test suites
+│   ├── unit/        # Unit tests
+│   ├── integration/ # Integration tests
+│   └── e2e/         # End-to-end tests
+├── scripts/          # Utility scripts
+└── docs/             # Documentation
+```
+
+## Development
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=core --cov-report=html
+
+# Run specific test categories
+pytest -m unit
+pytest -m integration
+pytest -m e2e
+```
+
+### Code Quality
+
+```bash
+# Format code
+black .
+isort .
+
+# Type checking
+mypy .
+
+# Linting
+flake8 .
+
+# Security checks
+bandit -r core/
+safety check
+```
+
+### Pre-commit Hooks
+
+```bash
+pre-commit install
+pre-commit run --all-files
+```
+
+## API Documentation
+
+Once the server is running, visit:
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+## Configuration
+
+Configuration is managed through environment variables and YAML files. See `config/` directory for examples.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Support
+
+For support, email support@example.com or open an issue in the GitHub repository.

@@ -1,0 +1,3 @@
+[console_scripts]
+mvp-cli = scripts.cli:main
+mvp-server = core.api.main:run

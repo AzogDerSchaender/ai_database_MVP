@@ -1,0 +1,1476 @@
+# Multi-Agent Database AI - MVP Development Plan
+
+## 🚀 Streamlined MVP Approach (Optimized for LLM & Cursor)
+
+This revised plan focuses on delivering a functional MVP with core capabilities, allowing for faster market entry and user feedback while maintaining the innovative multi-agent architecture. **Optimized for LLM-driven development with Cursor's multi-file editing capabilities.**
+
+## 📋 MVP Development Phases (6 Phases, 38 Prompts)
+
+### Phase 0: Project Setup & Standards (2 prompts)
+Initialize project structure and development standards
+
+### Phase 1: Core Infrastructure (6 prompts)
+Build the essential foundation for multi-agent coordination
+
+### Phase 2: Core Agents (6 prompts)
+Implement basic versions of Clarifier, Coder, and Tester agents
+
+### Phase 3: Database Intelligence (6 prompts)
+Add fundamental database understanding and optimization
+
+### Phase 4: REST API & Interface (4 prompts)
+Create API access and monitoring
+
+### Phase 5: Quality & Deployment (2 prompts)
+Final integration, testing, and deployment
+
+---
+
+## Phase 0: Project Setup & Standards
+
+### Overview
+Set up the complete project foundation with proper development standards optimized for Cursor AI development.
+
+### Prompt 0.1: Project Initialization & Structure
+
+```
+I need to set up a complete Python project structure for a multi-agent database AI system, optimized for Cursor AI development.
+
+Please create the complete project foundation:
+
+1. Create pyproject.toml:
+   - Project metadata and dependencies
+   - FastAPI, SQLAlchemy, asyncio support
+   - Development dependencies (pytest, black, mypy)
+   - Build system configuration
+
+2. Create requirements.txt and requirements-dev.txt:
+   - Production dependencies with pinned versions
+   - Development tools and testing frameworks
+   - Database drivers (psycopg2, PyMySQL)
+
+3. Create .gitignore:
+   - Python-specific ignores
+   - IDE and environment files
+   - Database and log files
+   - Cursor-specific ignores
+
+4. Create initial directory structure:
+   ```
+   multi-agent-database-ai-mvp/
+   ├── core/
+   ├── agents/
+   ├── database/
+   ├── api/
+   ├── frontend/
+   ├── sdk/
+   ├── config/
+   ├── tests/
+   ├── scripts/
+   └── docs/
+   ```
+
+5. Create __init__.py files in all Python packages
+
+Success Criteria:
+✅ Project installs cleanly with `pip install -e .`
+✅ All directories are properly structured
+✅ Dependencies resolve without conflicts
+✅ Git repository initializes correctly
+
+Performance Requirements:
+- Package installation: <30 seconds
+- Import time: <2 seconds
+```
+
+### Prompt 0.2: Development Standards & CI Setup
+
+```
+I need to establish comprehensive development standards and automation for consistent code quality.
+
+Please implement development standards optimized for Cursor AI workflows:
+
+1. Create .pre-commit-config.yaml:
+   - Black code formatting
+   - Flake8 linting
+   - MyPy type checking
+   - Import sorting (isort)
+
+2. Create pyproject.toml sections:
+   - Black configuration
+   - MyPy configuration
+   - Pytest configuration
+   - Coverage settings
+
+3. Create scripts/setup-dev.py:
+   - Development environment setup
+   - Pre-commit hook installation
+   - Database setup for testing
+   - Validation checks
+
+4. Create docs/CODING_STANDARDS.md:
+   - Code style guidelines
+   - Naming conventions
+   - Documentation standards
+   - Error handling patterns
+   - Cursor AI workflow tips
+
+5. Create .github/workflows/ci.yml:
+   - Automated testing
+   - Code quality checks
+   - Security scanning
+   - Documentation builds
+
+Success Criteria:
+✅ All linting passes on empty project
+✅ Pre-commit hooks work correctly
+✅ CI pipeline runs successfully
+✅ Documentation builds without errors
+
+Performance Requirements:
+- Linting: <10 seconds
+- Type checking: <15 seconds
+- Test setup: <5 seconds
+```
+
+---
+
+## Phase 1: Core Infrastructure (Enhanced)
+
+### Overview
+Build the essential foundation for multi-agent coordination with improved modularity and Cursor optimization.
+
+### Prompt 1.1: Message Bus & Communication Core
+
+```
+I need to build the core messaging infrastructure for multi-agent communication, optimized for Cursor's multi-file editing.
+
+Use Cursor's multi-file editing to create these files simultaneously, ensuring consistency:
+
+1. Create core/message_bus.py:
+   - Async pub/sub messaging system
+   - Message routing and delivery
+   - Priority queue implementation
+   - Dead letter queue handling
+   - Message persistence for debugging
+
+2. Create core/message_types.py:
+   - StandardMessage base class
+   - AgentRequest, AgentResponse classes
+   - ErrorMessage, StatusMessage classes
+   - ContextMessage for sharing state
+   - Message validation schemas
+
+3. Create tests/test_message_bus.py:
+   - Message delivery tests
+   - Priority handling tests
+   - Error propagation tests
+   - Performance benchmarks
+
+Handle these error scenarios:
+- Message delivery failures
+- Agent unavailability
+- Message corruption
+- Queue overflow
+
+Success Criteria:
+✅ 1000+ messages/second throughput
+✅ Message delivery guarantee >99.9%
+✅ Priority ordering works correctly
+✅ Error messages propagate properly
+
+Performance Requirements:
+- Message latency: <10ms
+- Memory per message: <1KB
+- Queue processing: <5ms per message
+```
+
+### Prompt 1.2: Agent Orchestrator & Lifecycle
+
+```
+I need a robust agent orchestration system that manages agent lifecycles and coordination.
+
+Please implement with Cursor's codebase-wide consistency checking:
+
+1. Create core/orchestrator.py:
+   - Agent registration and discovery
+   - Lifecycle management (start/stop/restart)
+   - Health monitoring and recovery
+   - Load balancing across agent instances
+   - Graceful shutdown handling
+
+2. Create core/agent_registry.py:
+   - Service discovery mechanism
+   - Capability-based routing
+   - Agent metadata storage
+   - Version compatibility checking
+
+3. Create core/health_monitor.py:
+   - Agent health checks
+   - Performance monitoring
+   - Automatic recovery strategies
+   - Alert generation
+
+4. Create tests/test_orchestrator.py:
+   - Agent lifecycle tests
+   - Failure recovery tests
+   - Load balancing tests
+
+Success Criteria:
+✅ Manages 50+ concurrent agents
+✅ <100ms agent registration time
+✅ 99.9% uptime with auto-recovery
+✅ Zero-downtime agent updates
+
+Performance Requirements:
+- Agent startup: <500ms
+- Health check interval: 1 second
+- Recovery time: <5 seconds
+```
+
+### Prompt 1.3: Base Agent Framework
+
+```
+I need a comprehensive base agent framework that all agents will inherit from.
+
+Create the foundation with Cursor's multi-file editing:
+
+1. Create core/base_agent.py:
+   - Abstract BaseAgent class
+   - Message handling interface
+   - State management
+   - Error handling and recovery
+   - Performance metrics collection
+
+2. Create core/agent_capabilities.py:
+   - Capability definition system
+   - Skill registration
+   - Resource requirements
+   - Dependency management
+
+3. Create core/agent_context.py:
+   - Context sharing interface
+   - State persistence
+   - Context versioning
+   - Conflict resolution
+
+4. Create tests/test_base_agent.py:
+   - Agent behavior tests
+   - Context sharing tests
+   - Error handling tests
+
+Success Criteria:
+✅ All agents inherit consistently
+✅ Context sharing works seamlessly
+✅ Error recovery is automatic
+✅ Performance metrics are collected
+
+Performance Requirements:
+- Message processing: <50ms
+- Context operations: <10ms
+- State persistence: <100ms
+```
+
+### Prompt 1.4: Sandbox Environment & Safety
+
+```
+I need a robust sandbox environment for safe database operations with comprehensive isolation.
+
+Please implement with Cursor's error-checking capabilities:
+
+1. Create core/sandbox.py:
+   - Transaction isolation wrapper
+   - Resource limits enforcement
+   - Query timeout management
+   - Automatic rollback on errors
+   - Audit logging
+
+2. Create core/db_executor.py:
+   - Safe SQL execution engine
+   - Connection pool management
+   - Query validation
+   - Result sanitization
+   - Performance tracking
+
+3. Create core/safety_monitor.py:
+   - Resource usage monitoring
+   - Dangerous operation detection
+   - Automatic intervention
+   - Security policy enforcement
+
+4. Create tests/test_sandbox.py:
+   - Isolation tests
+   - Rollback scenarios
+   - Resource limit tests
+   - Security tests
+
+Handle these scenarios:
+- Long-running queries
+- Resource exhaustion
+- Malicious SQL injection attempts
+- Connection failures
+
+Success Criteria:
+✅ 100% transaction rollback on error
+✅ Resource limits enforced
+✅ No data corruption possible
+✅ Complete operation auditing
+
+Performance Requirements:
+- Transaction overhead: <10ms
+- Resource monitoring: <5ms
+- Query validation: <50ms
+```
+
+### Prompt 1.5: Workflow Engine & Templates
+
+```
+I need a flexible workflow engine for coordinating complex multi-agent tasks.
+
+Use Cursor's pattern matching to ensure consistency across workflow definitions:
+
+1. Create core/workflow.py:
+   - Workflow definition DSL
+   - Step execution engine
+   - Conditional branching
+   - Parallel execution support
+   - Error recovery strategies
+
+2. Create core/workflow_templates.py:
+   - Query generation workflow
+   - Data validation workflow
+   - Schema analysis workflow
+   - Migration workflow
+   - Optimization workflow
+
+3. Create core/progress_tracker.py:
+   - Real-time progress monitoring
+   - ETA calculation
+   - Step-by-step logging
+   - Visual progress reporting
+
+4. Create tests/test_workflow.py:
+   - Workflow execution tests
+   - Error recovery tests
+   - Performance tests
+
+Success Criteria:
+✅ Complex workflows execute reliably
+✅ Error recovery works correctly
+✅ Progress tracking is accurate
+✅ Parallel execution scales
+
+Performance Requirements:
+- Workflow startup: <200ms
+- Step transition: <50ms
+- Progress updates: <10ms
+```
+
+### Prompt 1.6: Configuration & Database Connectors
+
+```
+I need comprehensive configuration management and database connectors for multiple database types.
+
+Please implement with Cursor's multi-file coordination:
+
+1. Create config/settings.py:
+   - Environment-based configuration
+   - Database connection settings
+   - Agent configuration
+   - Security settings
+   - Feature flags
+
+2. Create database/base_connector.py:
+   - Abstract database interface
+   - Connection management
+   - Query execution framework
+   - Error handling patterns
+
+3. Create database/postgres_connector.py:
+   - PostgreSQL-specific implementation
+   - Advanced features support
+   - Performance optimizations
+
+4. Create database/mysql_connector.py:
+   - MySQL-specific implementation
+   - Version compatibility
+   - Charset handling
+
+5. Create tests/test_connectors.py:
+   - Connection tests
+   - Query execution tests
+   - Error handling tests
+
+Success Criteria:
+✅ Multiple database support
+✅ Connection pooling works
+✅ Configuration validation
+✅ Graceful error handling
+
+Performance Requirements:
+- Connection establishment: <100ms
+- Query execution overhead: <5ms
+- Configuration loading: <50ms
+```
+
+### Prompt 1.7: Phase 1 Integration & Validation
+
+```
+Let's validate and integrate all Phase 1 components before proceeding to agents.
+
+Use Cursor's codebase analysis to ensure complete integration:
+
+1. Create tests/integration/test_phase1_integration.py:
+   - End-to-end message flow tests
+   - Agent orchestration integration
+   - Database connectivity tests
+   - Workflow execution tests
+   - Error propagation tests
+
+2. Create scripts/validate_infrastructure.py:
+   - Infrastructure health checks
+   - Performance benchmarks
+   - Configuration validation
+   - Security verification
+
+3. Fix any integration issues found:
+   - Use Cursor's codebase search to find inconsistencies
+   - Resolve naming conflicts
+   - Ensure error handling is consistent
+   - Validate all imports and dependencies
+
+4. Create docs/PHASE1_ARCHITECTURE.md:
+   - Architecture overview
+   - Component interactions
+   - Configuration guide
+   - Troubleshooting guide
+
+Success Criteria:
+✅ All integration tests pass
+✅ Performance benchmarks meet targets
+✅ No circular dependencies
+✅ Complete documentation
+
+Performance Requirements:
+- Full system startup: <5 seconds
+- Message round-trip: <50ms
+- Database connection: <200ms
+```
+
+---
+
+## Phase 2: Core Agents (Enhanced)
+
+### Overview
+Implement sophisticated versions of the three essential agents with improved capabilities and Cursor optimization.
+
+### Prompt 2.1: Advanced Clarifier Agent
+
+```
+I need an intelligent Clarifier Agent that understands user intent and builds comprehensive context.
+
+Use Cursor's AI assistance to optimize the natural language processing:
+
+1. Create agents/clarifier.py:
+   - Intent classification system
+   - Context-aware question generation
+   - Schema understanding
+   - User interaction management
+   - Learning from previous interactions
+
+2. Create agents/clarifier_intelligence.py:
+   - NLP processing for user requests
+   - Question prioritization
+   - Context building strategies
+   - Disambiguation techniques
+
+3. Create agents/schema_analyzer.py:
+   - Deep schema analysis
+   - Relationship mapping
+   - Constraint discovery
+   - Performance implications
+
+4. Create tests/test_clarifier.py:
+   - Intent classification tests
+   - Question generation tests
+   - Context building tests
+   - Schema analysis tests
+
+Handle these scenarios:
+- Ambiguous user requests
+- Complex schema relationships
+- Missing information
+- Contradictory requirements
+
+Success Criteria:
+✅ 95%+ intent classification accuracy
+✅ Relevant questions generated
+✅ Complete schema understanding
+✅ Context builds incrementally
+
+Performance Requirements:
+- Request analysis: <500ms
+- Question generation: <200ms
+- Schema analysis: <1 second
+```
+
+### Prompt 2.2: Intelligent Coder Agent
+
+```
+I need a sophisticated Coder Agent that generates optimized, secure SQL code.
+
+Leverage Cursor's code generation capabilities:
+
+1. Create agents/coder.py:
+   - Advanced SQL generation
+   - Multi-dialect support
+   - Query optimization
+   - Security validation
+   - Code documentation
+
+2. Create agents/sql_generator.py:
+   - Template-based generation
+   - Dynamic query building
+   - Join optimization
+   - Subquery handling
+
+3. Create agents/code_optimizer.py:
+   - Performance optimization
+   - Index utilization
+   - Query plan analysis
+   - Resource optimization
+
+4. Create tests/test_coder.py:
+   - SQL generation tests
+   - Optimization tests
+   - Security tests
+   - Multi-dialect tests
+
+Error handling for:
+- Invalid schema references
+- Security vulnerabilities
+- Performance bottlenecks
+- Syntax errors
+
+Success Criteria:
+✅ Generates syntactically correct SQL
+✅ Optimizes for performance
+✅ Prevents SQL injection
+✅ Supports multiple databases
+
+Performance Requirements:
+- Code generation: <1 second
+- Optimization analysis: <500ms
+- Security validation: <200ms
+```
+
+### Prompt 2.3: Comprehensive Tester Agent
+
+```
+I need a thorough Tester Agent that validates code safety, correctness, and performance.
+
+Use Cursor's testing framework integration:
+
+1. Create agents/tester.py:
+   - Multi-level testing strategy
+   - Safety validation
+   - Performance testing
+   - Result verification
+   - Regression detection
+
+2. Create agents/test_executor.py:
+   - Sandbox test execution
+   - Parallel test running
+   - Result comparison
+   - Performance profiling
+
+3. Create agents/validators.py:
+   - Syntax validation
+   - Semantic validation
+   - Data integrity checks
+   - Performance validation
+
+4. Create tests/test_tester.py:
+   - Validation logic tests
+   - Test execution tests
+   - Performance tests
+   - Safety tests
+
+Testing scenarios:
+- Edge cases and boundary conditions
+- Performance under load
+- Data corruption scenarios
+- Security vulnerabilities
+
+Success Criteria:
+✅ Catches 99%+ of errors
+✅ Performance tests are accurate
+✅ Safety validation is complete
+✅ Results are reproducible
+
+Performance Requirements:
+- Test execution: <2 seconds
+- Validation: <100ms
+- Performance profiling: <500ms
+```
+
+### Prompt 2.4: Agent Communication Protocols
+
+```
+I need sophisticated communication protocols for seamless agent interaction.
+
+Design protocols optimized for Cursor's multi-agent coordination:
+
+1. Create core/protocols.py:
+   - Message format specifications
+   - Protocol versioning
+   - Context sharing standards
+   - Error propagation rules
+   - Performance monitoring
+
+2. Create core/agent_coordination.py:
+   - Coordination patterns
+   - Conflict resolution
+   - Resource sharing
+   - Load balancing
+
+3. Create core/context_sync.py:
+   - Context synchronization
+   - Version control
+   - Merge strategies
+   - Conflict detection
+
+4. Create tests/test_protocols.py:
+   - Protocol compliance tests
+   - Context sync tests
+   - Coordination tests
+
+Success Criteria:
+✅ Agents communicate seamlessly
+✅ Context stays synchronized
+✅ Conflicts are resolved
+✅ Performance is maintained
+
+Performance Requirements:
+- Message protocol overhead: <5ms
+- Context sync: <50ms
+- Coordination: <100ms
+```
+
+### Prompt 2.5: Advanced Agent Orchestration
+
+```
+I need sophisticated orchestration for complex multi-agent workflows.
+
+Implement advanced coordination with Cursor's workflow optimization:
+
+1. Create core/advanced_coordinator.py:
+   - Intelligent task distribution
+   - Dynamic workflow adaptation
+   - Resource optimization
+   - Failure recovery
+   - Performance tuning
+
+2. Create workflows/intelligent_workflows.py:
+   - Adaptive query generation
+   - Context-aware validation
+   - Optimized execution paths
+   - Learning-based improvements
+
+3. Create core/workflow_optimizer.py:
+   - Execution path optimization
+   - Resource allocation
+   - Bottleneck detection
+   - Performance prediction
+
+4. Create tests/test_advanced_coordination.py:
+   - Complex workflow tests
+   - Failure recovery tests
+   - Performance optimization tests
+
+Success Criteria:
+✅ Optimal task distribution
+✅ Adaptive workflows
+✅ Robust failure recovery
+✅ Continuous optimization
+
+Performance Requirements:
+- Workflow optimization: <200ms
+- Task distribution: <50ms
+- Recovery time: <1 second
+```
+
+### Prompt 2.6: Phase 2 Agent Integration & Validation
+
+```
+Let's validate and optimize the complete agent ecosystem before proceeding.
+
+Use Cursor's comprehensive codebase analysis:
+
+1. Create tests/integration/test_agent_ecosystem.py:
+   - End-to-end agent workflows
+   - Inter-agent communication tests
+   - Error propagation validation
+   - Performance under load
+
+2. Create scripts/agent_benchmarks.py:
+   - Agent performance benchmarks
+   - Resource usage analysis
+   - Scalability testing
+   - Optimization recommendations
+
+3. Optimize agent performance:
+   - Use Cursor to identify bottlenecks
+   - Optimize critical paths
+   - Improve resource utilization
+   - Enhance error handling
+
+4. Create docs/AGENT_ARCHITECTURE.md:
+   - Agent interaction diagrams
+   - Communication protocols
+   - Performance characteristics
+   - Best practices
+
+Success Criteria:
+✅ All agents work together seamlessly
+✅ Performance targets are met
+✅ Error handling is robust
+✅ Documentation is complete
+
+Performance Requirements:
+- Complete workflow: <5 seconds
+- Agent coordination: <100ms
+- Error recovery: <1 second
+```
+
+---
+
+## Phase 3: Enhanced Database Intelligence
+
+### Overview
+Add sophisticated database understanding, optimization, and intelligence capabilities.
+
+### Prompt 3.1: Advanced Schema Intelligence
+
+```
+I need comprehensive schema intelligence that understands complex database structures.
+
+Use Cursor's pattern recognition for schema analysis:
+
+1. Create database/schema_intelligence.py:
+   - Deep relationship analysis
+   - Pattern recognition
+   - Constraint inference
+   - Data model understanding
+   - Historical schema tracking
+
+2. Create database/relationship_mapper.py:
+   - Foreign key discovery
+   - Implicit relationships
+   - Cardinality analysis
+   - Join path optimization
+
+3. Create database/pattern_detector.py:
+   - Design pattern recognition
+   - Anti-pattern detection
+   - Best practice recommendations
+   - Migration suggestions
+
+4. Create tests/test_schema_intelligence.py:
+   - Relationship detection tests
+   - Pattern recognition tests
+   - Performance tests
+
+Success Criteria:
+✅ Detects complex relationships
+✅ Identifies design patterns
+✅ Provides optimization suggestions
+✅ Tracks schema evolution
+
+Performance Requirements:
+- Schema analysis: <2 seconds
+- Relationship mapping: <500ms
+- Pattern detection: <1 second
+```
+
+### Prompt 3.2: Query Optimization Engine
+
+```
+I need an advanced query optimization engine with machine learning capabilities.
+
+Leverage Cursor's optimization assistance:
+
+1. Create database/query_optimizer.py:
+   - Cost-based optimization
+   - Execution plan analysis
+   - Index recommendations
+   - Query rewriting
+   - Performance prediction
+
+2. Create database/execution_analyzer.py:
+   - Execution plan parsing
+   - Bottleneck identification
+   - Resource usage analysis
+   - Performance modeling
+
+3. Create database/index_advisor.py:
+   - Missing index detection
+   - Index usage analysis
+   - Composite index recommendations
+   - Index maintenance suggestions
+
+4. Create tests/test_optimization.py:
+   - Optimization accuracy tests
+   - Performance improvement tests
+   - Index recommendation tests
+
+Success Criteria:
+✅ Improves query performance >50%
+✅ Accurate index recommendations
+✅ Reliable performance predictions
+✅ Effective query rewriting
+
+Performance Requirements:
+- Optimization analysis: <1 second
+- Index recommendations: <500ms
+- Performance prediction: <200ms
+```
+
+### Prompt 3.3: Data Quality & Validation Engine
+
+```
+I need comprehensive data quality analysis and validation capabilities.
+
+Use Cursor's data analysis features:
+
+1. Create database/data_quality.py:
+   - Multi-dimensional quality metrics
+   - Anomaly detection
+   - Data profiling
+   - Quality scoring
+   - Trend analysis
+
+2. Create database/anomaly_detector.py:
+   - Statistical anomaly detection
+   - Pattern-based detection
+   - Machine learning models
+   - Real-time monitoring
+
+3. Create database/quality_metrics.py:
+   - Completeness analysis
+   - Consistency validation
+   - Accuracy assessment
+   - Timeliness evaluation
+
+4. Create tests/test_data_quality.py:
+   - Quality metric tests
+   - Anomaly detection tests
+   - Validation tests
+
+Success Criteria:
+✅ Detects data quality issues >95%
+✅ Provides actionable insights
+✅ Real-time monitoring
+✅ Comprehensive reporting
+
+Performance Requirements:
+- Quality analysis: <2 seconds
+- Anomaly detection: <500ms
+- Metric calculation: <200ms
+```
+
+### Prompt 3.4: Performance Profiling & Monitoring
+
+```
+I need advanced performance profiling and monitoring for database operations.
+
+Implement comprehensive monitoring with Cursor's performance tools:
+
+1. Create database/performance_profiler.py:
+   - Query performance analysis
+   - Resource utilization tracking
+   - Bottleneck identification
+   - Performance trending
+
+2. Create database/monitoring_engine.py:
+   - Real-time monitoring
+   - Alert generation
+   - Performance dashboards
+   - Historical analysis
+
+3. Create database/bottleneck_analyzer.py:
+   - I/O bottleneck detection
+   - CPU utilization analysis
+   - Memory pressure monitoring
+   - Lock contention analysis
+
+4. Create tests/test_performance.py:
+   - Profiling accuracy tests
+   - Monitoring tests
+   - Alert tests
+
+Success Criteria:
+✅ Accurate performance profiling
+✅ Real-time bottleneck detection
+✅ Predictive alerting
+✅ Comprehensive metrics
+
+Performance Requirements:
+- Profiling overhead: <5%
+- Real-time monitoring: <100ms latency
+- Alert generation: <1 second
+```
+
+### Prompt 3.5: Intelligence API & Metadata Store
+
+```
+I need a comprehensive intelligence API and metadata management system.
+
+Use Cursor's API design assistance:
+
+1. Create database/intelligence_api.py:
+   - Unified intelligence interface
+   - Query intelligence endpoints
+   - Schema analysis API
+   - Performance insights API
+
+2. Create database/metadata_store.py:
+   - Centralized metadata repository
+   - Version control for metadata
+   - Query pattern storage
+   - Performance history
+
+3. Create database/knowledge_base.py:
+   - Learning from patterns
+   - Best practice repository
+   - Optimization recommendations
+   - Historical insights
+
+4. Create tests/test_intelligence_api.py:
+   - API functionality tests
+   - Metadata storage tests
+   - Knowledge base tests
+
+Success Criteria:
+✅ Comprehensive intelligence access
+✅ Reliable metadata storage
+✅ Learning from experience
+✅ Fast knowledge retrieval
+
+Performance Requirements:
+- API response time: <200ms
+- Metadata queries: <50ms
+- Knowledge retrieval: <100ms
+```
+
+### Prompt 3.6: Phase 3 Intelligence Integration & Validation
+
+```
+Let's integrate and validate all database intelligence components.
+
+Use Cursor's system-wide analysis:
+
+1. Create tests/integration/test_intelligence_system.py:
+   - Complete intelligence workflow tests
+   - Cross-component integration
+   - Performance validation
+   - Accuracy verification
+
+2. Create scripts/intelligence_benchmarks.py:
+   - Intelligence accuracy benchmarks
+   - Performance measurements
+   - Resource usage analysis
+   - Optimization validation
+
+3. Optimize intelligence performance:
+   - Identify and fix bottlenecks
+   - Optimize algorithm performance
+   - Improve resource utilization
+   - Enhance accuracy
+
+4. Create docs/INTELLIGENCE_ARCHITECTURE.md:
+   - Intelligence system overview
+   - Component descriptions
+   - Performance characteristics
+   - Usage guidelines
+
+Success Criteria:
+✅ All intelligence features work together
+✅ Performance targets achieved
+✅ Accuracy meets requirements
+✅ System is well documented
+
+Performance Requirements:
+- Complete analysis: <5 seconds
+- Intelligence queries: <500ms
+- System integration: <100ms overhead
+```
+
+---
+
+## Phase 4: REST API & Interface (Streamlined)
+
+### Overview
+Create a robust REST API and monitoring interface optimized for production use.
+
+### Prompt 4.1: Production-Ready REST API
+
+```
+I need a production-ready REST API with comprehensive features.
+
+Use Cursor's API development assistance:
+
+1. Create api/app.py:
+   - FastAPI application with async support
+   - Comprehensive error handling
+   - Request/response validation
+   - API versioning
+   - Health checks
+
+2. Create api/endpoints.py:
+   - Task submission endpoints
+   - Real-time status tracking
+   - Result retrieval with pagination
+   - Agent management endpoints
+   - Intelligence query endpoints
+
+3. Create api/middleware.py:
+   - Authentication middleware
+   - Rate limiting
+   - Request logging
+   - CORS handling
+   - Security headers
+
+4. Create tests/test_api.py:
+   - Endpoint functionality tests
+   - Authentication tests
+   - Rate limiting tests
+   - Error handling tests
+
+Security considerations:
+- SQL injection prevention
+- Input validation
+- Rate limiting
+- Authentication bypass attempts
+
+Success Criteria:
+✅ All endpoints work correctly
+✅ Authentication is secure
+✅ Rate limiting prevents abuse
+✅ Error handling is comprehensive
+
+Performance Requirements:
+- API response time: <200ms
+- Concurrent requests: 1000+
+- Rate limiting: 100 req/min per user
+```
+
+### Prompt 4.2: Task Management & WebSocket API
+
+```
+I need advanced task management with real-time updates via WebSocket.
+
+Implement real-time features with Cursor's async optimization:
+
+1. Create api/task_manager.py:
+   - Advanced task queue management
+   - Priority-based scheduling
+   - Resource allocation
+   - Progress tracking
+   - Result caching
+
+2. Create api/websocket_handler.py:
+   - Real-time progress updates
+   - Live task status
+   - Result streaming
+   - Error notifications
+   - Connection management
+
+3. Create api/task_scheduler.py:
+   - Intelligent task scheduling
+   - Resource-aware allocation
+   - Load balancing
+   - Batch processing
+
+4. Create tests/test_task_management.py:
+   - Task lifecycle tests
+   - WebSocket connection tests
+   - Real-time update tests
+   - Performance tests
+
+Success Criteria:
+✅ Tasks execute reliably
+✅ Real-time updates work
+✅ Resource allocation is optimal
+✅ WebSocket connections are stable
+
+Performance Requirements:
+- Task scheduling: <50ms
+- WebSocket latency: <100ms
+- Concurrent connections: 500+
+```
+
+### Prompt 4.3: Monitoring Dashboard & Analytics
+
+```
+I need a comprehensive monitoring dashboard with analytics capabilities.
+
+Create advanced monitoring with Cursor's frontend assistance:
+
+1. Create frontend/dashboard.html:
+   - Modern responsive dashboard
+   - Real-time metrics display
+   - Interactive charts
+   - Agent status monitoring
+   - Performance analytics
+
+2. Create frontend/dashboard.js:
+   - Real-time data updates
+   - Interactive visualizations
+   - WebSocket integration
+   - Performance charts
+   - Alert notifications
+
+3. Create api/analytics.py:
+   - Usage analytics
+   - Performance metrics
+   - User behavior tracking
+   - Trend analysis
+   - Report generation
+
+4. Create tests/test_dashboard.py:
+   - Dashboard functionality tests
+   - Real-time update tests
+   - Chart rendering tests
+
+Success Criteria:
+✅ Dashboard loads quickly
+✅ Real-time updates work
+✅ Charts are interactive
+✅ Analytics are accurate
+
+Performance Requirements:
+- Dashboard load time: <2 seconds
+- Real-time updates: <100ms latency
+- Chart rendering: <500ms
+```
+
+### Prompt 4.4: Python SDK & Documentation
+
+```
+I need a comprehensive Python SDK with excellent documentation.
+
+Create production-ready SDK with Cursor's documentation tools:
+
+1. Create sdk/client.py:
+   - Intuitive API client
+   - Async/sync support
+   - Automatic retries
+   - Error handling
+   - Connection pooling
+
+2. Create sdk/models.py:
+   - Comprehensive data models
+   - Type hints throughout
+   - Validation schemas
+   - Serialization support
+
+3. Create examples/comprehensive_examples.py:
+   - Complete usage examples
+   - Best practices
+   - Error handling patterns
+   - Performance optimization
+
+4. Create docs/API_DOCUMENTATION.md:
+   - Complete API reference
+   - SDK usage guide
+   - Integration examples
+   - Troubleshooting guide
+
+Success Criteria:
+✅ SDK is intuitive to use
+✅ Documentation is comprehensive
+✅ Examples work out-of-box
+✅ Error handling is robust
+
+Performance Requirements:
+- SDK initialization: <100ms
+- API calls: <200ms
+- Documentation build: <30 seconds
+```
+
+---
+
+## Phase 5: Quality Assurance & Deployment
+
+### Overview
+Comprehensive quality assurance, security review, and production deployment.
+
+### Prompt 5.1: Comprehensive Security & Performance Review
+
+```
+I need a thorough security audit and performance optimization of the entire system.
+
+Use Cursor's security analysis capabilities:
+
+1. Security Review:
+   - SQL injection vulnerability scan
+   - Authentication security audit
+   - API endpoint security review
+   - Data encryption validation
+   - Access control verification
+
+2. Performance Optimization:
+   - End-to-end performance profiling
+   - Database query optimization
+   - API response time optimization
+   - Memory usage optimization
+   - CPU utilization improvement
+
+3. Create security/security_audit.py:
+   - Automated security checks
+   - Vulnerability scanning
+   - Compliance verification
+   - Security reporting
+
+4. Create performance/optimization_report.py:
+   - Performance benchmarking
+   - Bottleneck identification
+   - Optimization recommendations
+   - Before/after comparisons
+
+Handle these security scenarios:
+- SQL injection attempts
+- Authentication bypass
+- Data exfiltration
+- Privilege escalation
+
+Success Criteria:
+✅ No critical security vulnerabilities
+✅ Performance targets exceeded
+✅ All optimizations implemented
+✅ Comprehensive security documentation
+
+Performance Requirements:
+- API response: <200ms average
+- Database queries: <100ms average
+- Memory usage: <2GB total
+- CPU utilization: <70% peak
+```
+
+### Prompt 5.2: Production Deployment & Operations
+
+```
+I need complete production deployment setup with monitoring and operations.
+
+Create production-ready deployment with Cursor's DevOps assistance:
+
+1. Create docker/Dockerfile:
+   - Multi-stage production build
+   - Security hardening
+   - Minimal attack surface
+   - Performance optimization
+
+2. Create docker/docker-compose.prod.yml:
+   - Production service definitions
+   - Database clustering
+   - Load balancing
+   - Health checks
+   - Logging configuration
+
+3. Create scripts/deploy.py:
+   - Automated deployment
+   - Database migrations
+   - Service validation
+   - Rollback capability
+
+4. Create monitoring/production_monitoring.py:
+   - Application monitoring
+   - Infrastructure monitoring
+   - Log aggregation
+   - Alert management
+
+5. Create docs/PRODUCTION_GUIDE.md:
+   - Deployment instructions
+   - Configuration guide
+   - Monitoring setup
+   - Troubleshooting procedures
+   - Maintenance guidelines
+
+Success Criteria:
+✅ One-command deployment
+✅ Zero-downtime updates
+✅ Comprehensive monitoring
+✅ Automated recovery
+
+Performance Requirements:
+- Deployment time: <5 minutes
+- Service startup: <30 seconds
+- Health check response: <1 second
+- Log processing: <10ms per entry
+```
+
+---
+
+## 🎯 Enhanced Success Criteria
+
+### Functional Requirements
+- ✅ Generate SQL from natural language (>95% accuracy)
+- ✅ Validate queries before execution (>99% safety)
+- ✅ Optimize queries for performance (>50% improvement)
+- ✅ Safe sandbox execution (100% isolation)
+- ✅ REST API access (<200ms response time)
+- ✅ Real-time monitoring and alerts
+- ✅ Comprehensive security controls
+
+### Performance Targets
+- Query generation: < 1 second (improved from 3)
+- API response time: < 200ms (improved from 500ms)
+- Concurrent tasks: 100+ (improved from 10+)
+- Agent coordination: < 50ms overhead (improved from 100ms)
+- System throughput: 1000+ requests/minute
+- Database connections: 500+ concurrent
+- Memory efficiency: < 2GB total system usage
+
+### Quality Metrics
+- SQL syntax accuracy: > 98% (improved from 95%)
+- Test coverage: > 90% (improved from 80%)
+- API uptime: > 99.9% (improved from 99%)
+- Error handling: 100% graceful
+- Security vulnerabilities: 0 critical
+- Documentation coverage: 100%
+- Performance regression: 0% allowed
+
+### Cursor Optimization Features
+- ✅ Multi-file editing for consistency
+- ✅ Codebase-wide pattern enforcement
+- ✅ Automated code quality checks
+- ✅ AI-assisted optimization
+- ✅ Real-time error detection
+- ✅ Intelligent refactoring suggestions
+
+---
+
+## 🚀 Post-MVP Expansion Path
+
+After validating the MVP with users:
+
+### Phase 6: Advanced Intelligence
+- Machine learning-based optimization
+- Predictive performance modeling
+- Advanced anomaly detection
+- Self-healing capabilities
+
+### Phase 7: Enterprise Features
+- Multi-tenancy support
+- Advanced security (SSO, RBAC)
+- Compliance (GDPR, HIPAA, SOX)
+- High availability clustering
+
+### Phase 8: Cloud & Integration
+- Cloud database support (AWS RDS, Azure SQL)
+- BI tool integration (Tableau, PowerBI)
+- CDC and streaming data
+- Workflow orchestration (Airflow, Prefect)
+
+### Phase 9: AI Enhancement
+- Natural language to SQL with GPT integration
+- Automated schema design
+- Intelligent data modeling
+- Predictive maintenance
+
+---
+
+## 📁 Enhanced Project Structure
+
+```
+multi-agent-database-ai-mvp/
+├── core/
+│   ├── orchestrator.py          # Agent orchestration
+│   ├── message_bus.py           # Inter-agent messaging
+│   ├── base_agent.py            # Agent framework
+│   ├── workflow.py              # Workflow engine
+│   ├── sandbox.py               # Safe execution
+│   ├── protocols.py             # Communication protocols
+│   └── coordinator.py           # Advanced coordination
+├── agents/
+│   ├── clarifier.py             # Requirements clarification
+│   ├── coder.py                 # Code generation
+│   ├── tester.py                # Testing and validation
+│   └── intelligence/            # Agent intelligence modules
+├── database/
+│   ├── connectors/              # Database connections
+│   ├── intelligence/            # Schema analysis
+│   ├── optimization/            # Query optimization
+│   ├── quality/                 # Data quality
+│   └── monitoring/              # Performance monitoring
+├── api/
+│   ├── app.py                   # FastAPI application
+│   ├── endpoints.py             # API routes
+│   ├── websocket_handler.py     # Real-time updates
+│   ├── task_manager.py          # Task management
+│   └── middleware.py            # Security & monitoring
+├── frontend/
+│   ├── dashboard.html           # Monitoring dashboard
+│   ├── dashboard.js             # Interactive features
+│   └── analytics.js             # Analytics visualization
+├── sdk/
+│   ├── client.py                # Python SDK
+│   ├── async_client.py          # Async SDK
+│   └── models.py                # Data models
+├── config/
+│   ├── settings.py              # Configuration
+│   ├── environments/            # Environment configs
+│   └── security.py              # Security settings
+├── tests/
+│   ├── unit/                    # Unit tests
+│   ├── integration/             # Integration tests
+│   ├── performance/             # Performance tests
+│   └── security/                # Security tests
+├── docker/
+│   ├── Dockerfile               # Container image
+│   ├── docker-compose.yml       # Development setup
+│   └── docker-compose.prod.yml  # Production setup
+├── scripts/
+│   ├── setup-dev.py             # Development setup
+│   ├── deploy.py                # Deployment automation
+│   └── benchmarks.py            # Performance benchmarks
+├── docs/
+│   ├── API_DOCUMENTATION.md     # API reference
+│   ├── DEPLOYMENT_GUIDE.md      # Deployment guide
+│   ├── ARCHITECTURE.md          # System architecture
+│   └── DEVELOPMENT_GUIDE.md     # Development guide
+├── monitoring/
+│   ├── prometheus.yml           # Metrics configuration
+│   ├── grafana/                 # Dashboard configs
+│   └── alerts.yml               # Alert rules
+├── security/
+│   ├── policies.yml             # Security policies
+│   └── audit.py                 # Security auditing
+├── pyproject.toml               # Project configuration
+├── requirements.txt             # Dependencies
+├── requirements-dev.txt         # Development dependencies
+└── README.md                    # Project overview
+```
+
+## 🎯 Cursor-Specific Optimization Notes
+
+### Multi-File Editing Strategies
+- Use Cursor's multi-file editing for related components
+- Maintain consistency across agent interfaces
+- Coordinate database schema changes across connectors
+- Synchronize API models with SDK models
+
+### AI-Assisted Development
+- Leverage Cursor's code completion for boilerplate
+- Use AI suggestions for error handling patterns
+- Get optimization recommendations for performance-critical code
+- Utilize AI for comprehensive test generation
+
+### Codebase Analysis Features
+- Use Cursor's search to find inconsistent patterns
+- Identify potential security vulnerabilities
+- Find performance bottlenecks across the system
+- Ensure naming conventions are followed
+
+This enhanced plan is optimized for LLM-driven development with Cursor, providing clear guidance, comprehensive validation, and production-ready results. The 38 carefully crafted prompts will deliver a robust MVP in 8-12 weeks with exceptional code quality and performance.
